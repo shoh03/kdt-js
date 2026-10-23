@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>객체를 동적으로 생성, 삽입, 삭제</title>
+</head>
+<body>
+    <div id="wrap">
+        <p>DOM트리에 동적으로 객체를 삽입</p>
+        <p>
+            createElement("태그명"), appendChild("태그객체"), removeChild("태그객체")
+        </p>
+    </div>
+    <a href="javascript:createDIV()">DIV 생성</a>
+</body>
+<script>
+    // globalThis: Node환경 -> global, browser환경 -> this
+    // 전역변수 담당하는 객체
+    globalThis.number = 0
+    function createDIV(){
+
+        const colors = new Array("yello", "red", "blue", "green", "purple", "orange", "pink")
+        const i = Math.floor(Math.random() * colors.length)
+        const div = document.createElement("div")
+        const wrap = document.getElementById("wrap")
+
+        div.style.backgroundColor = colors[i]
+        div.innerText = `새로 생성된 DIV ${++globalThis.number}입니다.`
+        wrap.appendChild(div)
+
+        // // 화살표함수는 this바인딩 불가(전역변수를 호출하기 때문)
+        // div.onclick = () => {
+        //     this.remove()
+        //     this.parentElement.removeChild(this)
+        // }
+
+        div.onclick = function(){
+            this.remove()
+            // this.parentElement.removeChild(this) // 원래 이렇게 씀
+        }
+    }
+</script>
+</html>
